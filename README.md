@@ -1,5 +1,5 @@
-# Python Notes
+# Mysql Notes
 
 ```
-Begineers Python Tutorial 
+Begineers Mysql Tutorial 
 ```
