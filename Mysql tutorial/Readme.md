@@ -2,7 +2,7 @@
 sort: 1
 ---
 
-# Python Tutorial
+# Mysql Tutorial
 
 <!-- ```
 {% include list.liquid all=true %}
