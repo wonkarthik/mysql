@@ -1,0 +1,11 @@
+site_name: Mysql Notes
+pages:
+  - Mysql Tutorial:
+     - numbers: "numbers.md"
+     - operators: "operators.md"
+     - variables: "Variables.md"
+     - variable scope : "variablescope.md"
+docs_dir: chapters
+theme: readthedocs
+plugins:
+    - search
