@@ -1,2 +1,5 @@
-# mysql
-Mysql Tutorial
+# Python Notes
+
+```
+Begineers Python Tutorial 
+```
