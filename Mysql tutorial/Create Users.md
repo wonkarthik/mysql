@@ -51,16 +51,16 @@ MySQL server provides multiple types of privileges to a new user account. Some o
 6. SELECT: It enables the user account to read a database.
 7. UPDATE: It enables the user account to update table rows.
 ```
-If you want to give all privileges to a newly created user, execute the following command.
 ```sql
+If you want to give all privileges to a newly created user, execute the following command.
 mysql> GRANT ALL PRIVILEGES ON * . * TO sindhuri@localhost;  
+
 If you want to give specific privileges to a newly created user, execute the following command.
-
 mysql> GRANT CREATE, SELECT, INSERT ON * . * TO sindhuri@localhost;  
+
 Sometimes, you want to flush all the privileges of a user account for changes occurs immediately, type the following command.
-
 FLUSH PRIVILEGES;  
-If you want to see the existing privileges for the user, execute the following command.
 
+If you want to see the existing privileges for the user, execute the following command.
 mysql> SHOW GRANTS for username;  
 ```
