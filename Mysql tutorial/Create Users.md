@@ -64,3 +64,93 @@ FLUSH PRIVILEGES;
 If you want to see the existing privileges for the user, execute the following command.
 mysql> SHOW GRANTS for username;  
 ```
+## Create a user database and grant privilages
+
+```sql
+mysql> select user from mysql.user;
++------------------+
+| user             |
++------------------+
+| jame             |
+| musk             |
+| mysql.infoschema |
+| mysql.session    |
+| mysql.sys        |
+| root             |
+| writer           |
++------------------+
+8 rows in set (0.00 sec)
+mysql>
+
+mysql> CREATE USER IF NOT EXISTS sindhuri@localhost IDENTIFIED BY 'Internal@123';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| student            |
+| sys                |
+| vehicles           |
++--------------------+
+6 rows in set (0.00 sec)
+mysql>
+
+creating internal database 
+
+mysql> create database internal;
+Query OK, 1 row affected (0.00 sec)
+
+mysql>
+
+mysql> use internal;
+Database changed
+mysql>
+
+Creating a table lists under internal database
+mysql> create table lists( id int auto_increment primary key, todo varchar(100) not null, completed bool default false);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> 
+
+Providing grant privilages to user sindhuri for internal database
+mysql> grant all privileges on internal.* to sindhuri@localhost;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+
+mysql -u sindhuri -p
+Enter password: *********
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| internal           |
++--------------------+
+2 rows in set (0.00 sec)
+
+mysql> use internal;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_internal |
++--------------------+
+| lists              |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from lists;
+Empty set (0.00 sec)
+
+mysql>
+```
