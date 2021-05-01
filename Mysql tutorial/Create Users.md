@@ -163,9 +163,8 @@ To allow user accounts to work with database objects, you need to grant the user
 
 The following illustrates the basic syntax of the GRANT statement:
 
+Syntax: 
 ```sql
-`Syntax:` 
-
 GRANT privilege [,privilege],.. 
 ON privilege_level 
 TO account_name;
@@ -211,7 +210,9 @@ GRANT
 ON employees 
 TO bob@localhost;
 
-In this example, bob@localhost can select data from four columns employeeNumber, lastName, firstName, and email and update only the lastName column in the employees table.
+In this example, bob@localhost can select data from four columns employeeNumber, lastName, firstName, and email and 
+
+update only the lastName column in the employees table.
 ```
 `Proxy user privileges` allow one user to be a proxy for another. The proxy user gets all privileges of the proxied user. For example:
 ```sql
@@ -223,5 +224,9 @@ In this example, alice@localhost assumes all privileges of root.
 
 Finally, specify the account name of the user that you want to grant privileges after the TO keyword.
 
-Notice that in order to use the GRANT statement, you must have the GRANT OPTION privilege and the privileges that you are granting. If the read_only system variable is enabled, you need to have the SUPER privilege to execute the GRANT statement.
+Notice that in order to use the GRANT statement, you must have the GRANT OPTION privilege and the privileges that you are 
+
+granting. If the read_only system variable is enabled, you need to have the SUPER privilege to execute the GRANT 
+
+statement.
 ```
