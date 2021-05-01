@@ -323,7 +323,7 @@ mysql> show grants for dave@localhost;
 
 mysql>
 mysql>
-
+```
 ```note
 When the MySQL REVOKE command takes effect
 The effect of REVOKE statement depends on the privilege level:
@@ -460,7 +460,7 @@ mysql>
 
 ```
 
-Creating roles: 
+`Creating roles:` 
 
 To interact with the CRM database, you need to create accounts for developers who need full access to the database. In addition, you need to create accounts for users who need only read access and others who need both read/write access.
 
@@ -491,7 +491,7 @@ mysql> grant insert,update,delete on crm.* to crm_write;
 Query OK, 0 rows affected (0.00 sec)
 
 ```
-Assigning roles to user accounts
+`Assigning roles to user accounts: `
 Suppose you need one user account as the developer, one user account that can have read-only access and two user accounts that can have read/write access.
 
 To create new users, you use CREATE USER statements as follows:
