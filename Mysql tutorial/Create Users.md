@@ -349,6 +349,7 @@ If you want to grant the same set of privileges to multiple users, you follow th
 * Second, grant privileges to the role.
 * Third, grant the role to the users.
 In case you want to change the privileges of the users, you need to change the privileges of the granted role only. The changes will take effect to all users to which the role granted.
+
 ```sql
 create a new database named CRM, which stands for customer relationship management
 
@@ -464,6 +465,7 @@ Creating roles:
 To interact with the CRM database, you need to create accounts for developers who need full access to the database. In addition, you need to create accounts for users who need only read access and others who need both read/write access.
 
 To avoid granting privileges to each user account individually, you create a set of roles and grant the appropriate roles to each user account.
+
 ```sql
 To create new roles, you use CREATE ROLE statement:
 
@@ -487,6 +489,7 @@ The following statement grants INSERT, UPDATE, and DELETE privileges to crm_writ
 
 mysql> grant insert,update,delete on crm.* to crm_write;
 Query OK, 0 rows affected (0.00 sec)
+
 ```
 Assigning roles to user accounts
 Suppose you need one user account as the developer, one user account that can have read-only access and two user accounts that can have read/write access.
