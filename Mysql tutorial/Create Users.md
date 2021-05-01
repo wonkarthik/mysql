@@ -214,6 +214,14 @@ In this example, bob@localhost can select data from four columns employeeNumber,
 
 update only the lastName column in the employees table.
 ```
+`Stored routine privileges` apply to stored procedures and stored functions, for example:
+```sql
+GRANT EXECUTE 
+ON PROCEDURE CheckCredit 
+TO bob@localhost;
+
+In this example, bob@localhost can execute the stored procedure CheckCredit in the current database.
+```
 `Proxy user privileges` allow one user to be a proxy for another. The proxy user gets all privileges of the proxied user. For example:
 ```sql
 GRANT PROXY 
@@ -229,4 +237,107 @@ Notice that in order to use the GRANT statement, you must have the GRANT OPTION 
 granting. If the read_only system variable is enabled, you need to have the SUPER privilege to execute the GRANT 
 
 statement.
+```
+##  Revoke some privilages to users
+
+```sql
+Create a user account named dave@localhost
+mysql>
+mysql> create user dave@localhost identified by 'SecretPass1!';
+Query OK, 0 rows affected (0.01 sec)
+
+Create a test database 
+mysql>
+mysql> create database test;
+Query OK, 1 row affected (0.00 sec)
+
+Grant dave@localhost the SELECT, UPDATE, and INSERT privileges on the test  database:
+mysql>
+mysql> grant update,select,delete on test.* to dave@localhost;
+Query OK, 0 rows affected (0.01 sec)
+
+Display the granted privileges of the dave@localhost user account:
+mysql>
+mysql> show grants for dave@localhost;
++----------------------------------------------------------------+
+| Grants for dave@localhost                                      |
++----------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `dave`@`localhost`                       |
+| GRANT SELECT, UPDATE, DELETE ON `test`.* TO `dave`@`localhost` |
++----------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql>
+
+Revoke the UPDATE and INSERT privileges from dave@localhost:
+mysql>
+mysql> revoke update,delete on test.* from dave@localhost;
+Query OK, 0 rows affected (0.00 sec)
+
+Display the granted privileges of the dave@localhost user account:
+mysql>
+mysql> show grants for dave@localhost;
++------------------------------------------------+
+| Grants for dave@localhost                      |
++------------------------------------------------+
+| GRANT USAGE ON *.* TO `dave`@`localhost`       |
+| GRANT SELECT ON `test`.* TO `dave`@`localhost` |
++------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql>
+
+
+ex 2 . Using MySQL REVOKE to revoke all privileges from a user account 
+
+mysql>
+mysql> grant execute on test.* to dave@localhost;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> show grants for dave@localhost;
++---------------------------------------------------------+
+| Grants for dave@localhost                               |
++---------------------------------------------------------+
+| GRANT USAGE ON *.* TO `dave`@`localhost`                |
+| GRANT SELECT, EXECUTE ON `test`.* TO `dave`@`localhost` |
++---------------------------------------------------------+
+2 rows in set (0.00 sec)
+mysql>
+mysql>
+
+Revoke all privileges of the dave@localhost user account by using the REVOKE ALL statement:
+mysql>
+mysql> revoke all,grant option from dave@localhost;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> show grants for dave@localhost;
++------------------------------------------+
+| Grants for dave@localhost                |
++------------------------------------------+
+| GRANT USAGE ON *.* TO `dave`@`localhost` |
++------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql>
+
+```note
+When the MySQL REVOKE command takes effect
+The effect of REVOKE statement depends on the privilege level:
+
+`Global level`
+
+The changes take effect when the user account connects to the MySQL Server in the subsequent sessions. The changes are not applied to all currently connected users.
+
+`Database level`
+
+The changes take effect after the next USE statement.
+
+`Table and column levels`
+
+The changes take effect on all subsequent queries.
+
 ```
