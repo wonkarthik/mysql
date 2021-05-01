@@ -154,3 +154,74 @@ Empty set (0.00 sec)
 
 mysql>
 ```
+
+## Grant Permissions  in different ways
+
+The CREATE USER statement creates one or more user accounts with no privileges. It means that the user accounts can log in to the MySQL Server, but cannot do anything such as selecting a database and querying data from tables.
+
+To allow user accounts to work with database objects, you need to grant the user accounts privileges. And the GRANT statement grants a user account one or more privileges.
+
+The following illustrates the basic syntax of the GRANT statement:
+
+```sql
+`Syntax:` 
+
+GRANT privilege [,privilege],.. 
+ON privilege_level 
+TO account_name;
+
+* This example grants the SELECT privilege on the table employees  in the sample database to the user acount bob@localhost:
+
+GRANT SELECT ON employees TO bob@localhost;
+
+* The following example grants UPDATE, DELETE, and INSERT privileges on the table employees to bob@localhost:
+
+GRANT INSERT, UPDATE, DELETE ON employees TO bob@localhost;
+
+```
+Specify the `privilege_level` that determines the level to which the privileges apply. MySQL supports the following main `privilege levels`
+
+![](./images/1.PNG)
+
+`Global privileges` apply to all databases in a MySQL Server. To assign global privileges, you use the *.* syntax, for example:
+```sql
+GRANT SELECT ON *.* TO bob@localhost;
+
+The account user bob@localhost can query data from all tables in all database of the current MySQL Server.
+```
+`Database privileges` apply to all objects in a database. To assign database-level privileges, you use the ON database_name.* syntax, for example:
+```sql
+GRANT INSERT ON classicmodels.* TO bob@localhost;
+
+In this example, bob@localhost can insert data into all tables in the classicmodels database.
+```
+`Table privileges` apply to all columns in a table. To assign table-level privileges, you use the ON database_name.table_name syntax, for example:
+```sql
+GRANT DELETE ON classicmodels.employees TO bob@localhsot;
+
+In this example, bob@localhost can delete rows from the table employees in the database classicmodels.
+
+If you skip the database name, MySQL uses the default database or issues an error if there is no default database
+```
+`Column privileges` apply to single columns in a table.  You must specify the column or columns for each privilege, for example:
+```sql
+GRANT 
+   SELECT (employeeNumner,lastName, firstName,email), 
+   UPDATE(lastName) 
+ON employees 
+TO bob@localhost;
+
+In this example, bob@localhost can select data from four columns employeeNumber, lastName, firstName, and email and update only the lastName column in the employees table.
+```
+`Proxy user privileges` allow one user to be a proxy for another. The proxy user gets all privileges of the proxied user. For example:
+```sql
+GRANT PROXY 
+ON root 
+TO alice@localhost;
+
+In this example, alice@localhost assumes all privileges of root.
+
+Finally, specify the account name of the user that you want to grant privileges after the TO keyword.
+
+Notice that in order to use the GRANT statement, you must have the GRANT OPTION privilege and the privileges that you are granting. If the read_only system variable is enabled, you need to have the SUPER privilege to execute the GRANT statement.
+```
