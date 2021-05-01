@@ -37,6 +37,7 @@ mysql> CREATE USER IF NOT EXISTS sindhuri@localhost IDENTIFIED BY 'Internal@123'
 Query OK, 0 rows affected (0.01 sec)
 
 mysql>
+
 ```
 
 ```javascript
@@ -665,3 +666,177 @@ mysql> GRANT crm_dev1@localhost TO crm_dev2@localhost;
 Query OK, 0 rows affected (0.01 sec)
 mysql>
 ```
+
+## Mysql Drop Users
+```sql
+mysql> create user api@localhost identified by 'Secure1Pass!';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+
+mysql> select user, host from mysql.user;
++------------------+-----------+
+| user             | host      |
++------------------+-----------+
+| crm_dev          | %         |
+| api              | localhost |
+| crm_dev1         | localhost |
+| crm_dev2         | localhost |
+| crm_read1        | localhost |
+| crm_write1       | localhost |
+| mysql.infoschema | localhost |
+| mysql.session    | localhost |
+| mysql.sys        | localhost |
+| root             | localhost |
+| writer           | localhost |
++------------------+-----------+
+16 rows in set (0.00 sec)
+
+mysql>
+
+mysql> drop user crm_write1@localhost, crm_dev2@localhost;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql>
+
+```
+## Mysql Show Users
+
+```sql
+To find list of users 
+mysql> select user, host from mysql.user;
++------------------+-----------+
+| user             | host      |
++------------------+-----------+
+| crm_dev          | %         |
+| dave             | localhost |
+| jame             | localhost |
+| musk             | localhost |
+| mysql.infoschema | localhost |
+| mysql.session    | localhost |
+| mysql.sys        | localhost |
+| root             | localhost |
+| writer           | localhost |
++------------------+-----------+
+9 rows in set (0.00 sec)
+
+mysql>
+
+To get the selected information like as hostname, password expiration status, and account locking, execute the query as below
+mysql>  SELECT user, host, account_locked, password_expired FROM user;
++------------------+-----------+----------------+------------------+
+| user             | host      | account_locked | password_expired |
++------------------+-----------+----------------+------------------+
+| crm_dev          | %         | Y              | Y                |
+| dave             | localhost | N              | N                |
+| jame             | localhost | N              | N                |
+| musk             | localhost | N              | N                |
+| mysql.infoschema | localhost | Y              | N                |
+| mysql.session    | localhost | Y              | N                |
+| mysql.sys        | localhost | Y              | N                |
+| root             | localhost | N              | N                |
+| writer           | localhost | Y              | Y                |
++------------------+-----------+----------------+------------------+
+9 rows in set (0.00 sec)
+
+mysql>
+
+We can get information of the current user by using the user() 
+mysql> 
+mysql> select user();
++----------------+
+| user()         |
++----------------+
+| root@localhost |
++----------------+
+1 row in set (0.00 sec)
+
+We can get information of the current user by using the database() 
+mysql>
+mysql> select database ();
++-------------+
+| database () |
++-------------+
+| mysql       |
++-------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+users logged in the database, where one is executing a Query, and others show in Sleep or Daemon status.
+mysql> SELECT user, host, db, command FROM information_schema.processlist;
++-----------------+-----------+-------+---------+
+| user            | host      | db    | command |
++-----------------+-----------+-------+---------+
+| root            | localhost | mysql | Sleep   |
+| event_scheduler | localhost | NULL  | Daemon  |
+| crm_read1       | localhost | NULL  | Sleep   |
+| root            | localhost | mysql | Query   |
++-----------------+-----------+-------+---------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql>
+
+To get a list of all users that have some level access to the database vehicles
+mysql> SELECT * FROM mysql.db WHERE Db = 'vehicles'\G;
+*************************** 1. row ***************************
+                 Host: localhost
+                   Db: vehicles
+                 User: jame
+          Select_priv: N
+          Insert_priv: N
+          Update_priv: N
+          Delete_priv: N
+          Create_priv: N
+            Drop_priv: N
+           Grant_priv: N
+      References_priv: N
+           Index_priv: N
+           Alter_priv: N
+Create_tmp_table_priv: N
+     Lock_tables_priv: N
+     Create_view_priv: N
+       Show_view_priv: N
+  Create_routine_priv: N
+   Alter_routine_priv: N
+         Execute_priv: Y
+           Event_priv: N
+         Trigger_priv: N
+mysql>
+
+To identify which users having access for vehicles database access
+
+mysql> SELECT db, host, user FROM mysql.db WHERE db = 'vehicles';
++----------+-----------+--------+
+| db       | host      | user   |
++----------+-----------+--------+
+| vehicles | localhost | jame   |
+| vehicles | localhost | musk   |
+| vehicles | localhost | writer |
++----------+-----------+--------+
+3 rows in set (0.01 sec)
+
+mysql>
+
+following query will show you information about all databases and associated users:
+mysql> SELECT db, host, user FROM mysql.db;
++--------------------+-----------+---------------+
+| db                 | host      | user          |
++--------------------+-----------+---------------+
+| crm                | %         | crm_dev       |
+| vehicles           | localhost | jame          |
+| vehicles           | localhost | musk          |
+| performance_schema | localhost | mysql.session |
+| sys                | localhost | mysql.sys     |
+| internal           | localhost | sindhuri      |
+| vehicles           | localhost | writer        |
++--------------------+-----------+---------------+
+7 rows in set (0.00 sec)
+
+mysql>
+
+```
+## Change user Password
+
